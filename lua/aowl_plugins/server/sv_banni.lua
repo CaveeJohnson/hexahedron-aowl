@@ -3,7 +3,7 @@ local BANFILE 	= "aowl/banni.txt"
 local HARDFILE 	= "aowl/hardbanni.txt"
 
 function banni.HardBan(id, name, reason)
-	local hardbans = luadata.ReadFile(HARDFILE)
+	local hardbans = luadata.ReadFile(HARDFILE) or {}
 		hardbans[id] = {
 			name 	= name,
 			reason 	= reason,
@@ -22,7 +22,7 @@ function banni.HardBan(id, name, reason)
 end
 
 function banni.UnHardBan(id, reason)
-	local hardbans = luadata.ReadFile(HARDFILE)
+	local hardbans = luadata.ReadFile(HARDFILE) or {}
 		local name = hardbans[id].name
 		hardbans[id] = nil
 	luadata.WriteFile(HARDFILE, hardbans)
@@ -31,13 +31,13 @@ function banni.UnHardBan(id, reason)
 end
 
 function banni.IsHardBanned(id)
-	local hardbans = luadata.ReadFile(HARDFILE)
+	local hardbans = luadata.ReadFile(HARDFILE) or {}
 
 	return hardbans[id]
 end
 
 function banni.ReadBanData(id)
-	local bans = luadata.ReadFile(BANFILE)
+	local bans = luadata.ReadFile(BANFILE) or {}
 		local ban = bans[id]
 
 	if (ban) then
@@ -48,7 +48,7 @@ function banni.ReadBanData(id)
 end
 
 function banni.ExpireBans()
-	local bans = luadata.ReadFile(BANFILE)
+	local bans = luadata.ReadFile(BANFILE) or {}
 
 	for id, ban in next, bans do
 		if (ban.b and ban.whenunban - banni.UnixTime() < 0) then
@@ -104,7 +104,7 @@ function banni.GetEntitiesInvolves(sid, bannerid)
 end
 
 function banni.Ban(id, name, banner, reason, unban)
-	local bans = luadata.ReadFile(BANFILE)
+	local bans = luadata.ReadFile(BANFILE) or {}
 		local oldban = bans[id]
 		bans[id] = {
 			sid 			= id,
@@ -140,7 +140,7 @@ function banni.Ban(id, name, banner, reason, unban)
 end
 
 function banni.UnBan(id, unbanner, reason)
-	local bans = luadata.ReadFile(BANFILE)
+	local bans = luadata.ReadFile(BANFILE) or {}
 		if (!bans[id] or !bans[id].b) then 
 			print("Cannot unban, no banni")
 
@@ -166,7 +166,7 @@ function banni.UnBan(id, unbanner, reason)
 end
 
 function banni.ResetBanCount(id)
-	local bans = luadata.ReadFile(BANFILE)
+	local bans = luadata.ReadFile(BANFILE) or {}
 		if (!bans[id]) then 
 			print("Cannot reset, no banni")
 
