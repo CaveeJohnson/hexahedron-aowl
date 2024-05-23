@@ -1,4 +1,5 @@
 if not system.IsLinux() then return end
+do return end
 --[[
 
 Most of these functions can be called at any time. Send queues what you send until a connection is made.
