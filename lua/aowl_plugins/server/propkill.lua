@@ -1,7 +1,5 @@
 local Tag = "propkill"
 
-do return end
-
 do
 	local ignore
 
